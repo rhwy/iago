@@ -1,15 +1,18 @@
 using Xunit;
 using NFluent;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
+
 using static NDescribe.Specs;
+using static System.Console;
 
 namespace NDescribe.Tests
 {
   public class CoffeeMachineSpecs
   {
-    Specify that =
-      CoffeeMachine =>
-        "Sould automate the production of coffee";
+    Specify that = () =>
+        "CoffeeMachine Sould automate the production of coffee";
 
     public void Run()
     {
@@ -29,7 +32,12 @@ namespace NDescribe.Tests
     [Fact]
     public void run_the_specs()
     {
-      new CoffeeMachineSpecs().Run();
+      var specs = new CoffeeMachineSpecs();
+      FieldInfo myFieldInfo1 = specs.GetType().GetField("that",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+      var specMessage = myFieldInfo1.GetValue(specs) as Specify;
+      WriteLine("[spec] " + specMessage());
+      specs.Run();
     }
   }
   public class CoffeeMachine{
