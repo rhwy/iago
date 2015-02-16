@@ -1,0 +1,11 @@
+{
+    "name":"iago.runner",
+    "version":"0.1.0-beta4",
+    "dependencies":{
+            "kmon": "0.3.0"
+
+    },
+    "commands":{
+            "ct" : "kmon --ext cs --server run",
+    }
+}
