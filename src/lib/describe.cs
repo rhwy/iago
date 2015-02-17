@@ -1,8 +1,9 @@
 using static System.Console;
 
-namespace NDescribe
+namespace Iago
 {
   public delegate string Specify();
+  public delegate string Description();
   public delegate void TestAction();
 
   public static class Specs {
