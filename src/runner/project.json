@@ -2,10 +2,23 @@
     "name":"iago.runner",
     "version":"0.1.0-beta4",
     "dependencies":{
-            "kmon": "0.3.0"
+      "Microsoft.Framework.Runtime":"1.0.0-*",
+      "Microsoft.Framework.ConfigurationModel":"1.0.0-*",
+      "Microsoft.Framework.ConfigurationModel.Json":"1.0.0-*",
+      "Microsoft.AspNet.Hosting":"1.0.0-*",
+      "Microsoft.Framework.Logging.Console":"1.0.0-*",
+      "kmon": "0.3.0"
 
     },
     "commands":{
             "ct" : "kmon --ext cs --server run",
+    },
+    "frameworks":{
+        "net45":{
+          "dependencies":{
+            "System.Runtime":"4.0.20.0"
+          }
+        },
+        "aspnet50":{}
     }
 }
