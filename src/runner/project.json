@@ -2,6 +2,7 @@
     "name":"iago.runner",
     "version":"0.1.0-beta4-3",
     "dependencies":{
+      "iago.lib":"0.1.0-*",
       "Microsoft.Framework.Runtime":"1.0.0-beta3",
       "Microsoft.Framework.ConfigurationModel":"1.0.0-beta3",
       "Microsoft.Framework.ConfigurationModel.Json":"1.0.0-beta3",

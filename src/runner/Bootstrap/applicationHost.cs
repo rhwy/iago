@@ -11,7 +11,7 @@ namespace Iago.Runner
 
     public void Run()
     {
-      
+      var domainAssemblies = AppDomain.CurrentDomain.GetAssemblies();
     }
   }
 
