@@ -8,6 +8,11 @@ namespace Iago.Runner
     {
       Configuration = hostedConfiguration;
     }
+
+    public void Run()
+    {
+      
+    }
   }
 
 }
