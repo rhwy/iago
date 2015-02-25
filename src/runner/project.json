@@ -6,6 +6,8 @@
       "Microsoft.Framework.Runtime":"1.0.0-beta3",
       "Microsoft.Framework.ConfigurationModel":"1.0.0-beta3",
       "Microsoft.Framework.ConfigurationModel.Json":"1.0.0-beta3",
+      "Microsoft.Framework.Logging": "1.0.0-*",
+      "Microsoft.Framework.Logging.Console": "1.0.0-*",
       "kmon": "0.3.0"
 
     },
