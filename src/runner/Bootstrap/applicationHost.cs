@@ -35,6 +35,7 @@ namespace Iago.Runner
       var specTypes = new List<Type>();
       hostedAssembly.ExportedTypes
           .Where(type => type.Name.ToLower().EndsWith("specs"))
+          .Where(type => type.IsClass)
           .ToList()
           .ForEach(type=> specTypes.Add(type));
 
@@ -43,6 +44,19 @@ namespace Iago.Runner
         foreach(var spec in specTypes)
         {
           logger.WriteInformation(spec.Name);
+          var instance = Activator.CreateInstance(spec);
+          var run = spec.GetMethod("Run");
+          if(run != null)
+          {
+            try
+            {
+              run.Invoke(instance,null);
+            } catch(Exception ex)
+            {
+              logger.WriteError(ex.InnerException.Message);
+            }
+
+          }
         }
       }
 

@@ -1,6 +1,5 @@
 namespace Iago.Tests
 {
-  using Xunit;
   using NFluent;
   using System;
   using System.Collections.Generic;
