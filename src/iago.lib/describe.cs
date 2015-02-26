@@ -15,5 +15,9 @@ namespace Iago
       WriteLine("\t[then] "+definition);
       assert();
     }
+
+    public static void And(string definition, TestAction assert){
+      WriteLine("\t[.And] "+definition);
+    }
   }
 }

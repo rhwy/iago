@@ -3,7 +3,7 @@ namespace Iago.Samples.CoffeeMachineExperience
   using Iago;
   using static Iago.Specs;
   using NFluent;
-  
+
   public class CoffeeMachineSpecs
   {
     Specify that = () =>
@@ -18,7 +18,13 @@ namespace Iago.Samples.CoffeeMachineExperience
           Then("screen must be equal to 'Welcome'", ()=>{
             Check.That(machine.Screen).IsEqualTo("Welcome");
           });
+
+          And("inserted coins should be 0",()=>{
+              Check.That(machine.InsertedCoins).IsEqualTo(0);
+          });
         });
+
+
     }
   }
 

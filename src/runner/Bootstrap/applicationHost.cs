@@ -43,8 +43,19 @@ namespace Iago.Runner
       {
         foreach(var spec in specTypes)
         {
-          logger.WriteInformation(spec.Name);
+          logger.WriteInformation("Running [" + spec.Name + "]");
+
           var instance = Activator.CreateInstance(spec);
+
+          var specifyField = spec
+              .GetFields(
+                BindingFlags.NonPublic | BindingFlags.Instance)
+              .FirstOrDefault(x=>x.FieldType == typeof(Specify));
+          if(specifyField != null)
+          {
+            var specify = (specifyField.GetValue(instance) as Specify)?.Invoke();
+            logger.WriteInformation("Specify : " + specify);
+          }
           var run = spec.GetMethod("Run");
           if(run != null)
           {
