@@ -1,10 +1,15 @@
 {
     "name":"iago.lib",
     "dependencies":{
-            "kmon": "0.3.0",
-            "NFluent":"1.3.1.0"
+        "Microsoft.Framework.Runtime":"1.0.0-beta3",
+        "Microsoft.Framework.ConfigurationModel":"1.0.0-beta3",
+        "Microsoft.Framework.ConfigurationModel.Json":"1.0.0-beta3",
+        "Microsoft.Framework.Logging": "1.0.0-*",
+        "Microsoft.Framework.Logging.Console": "1.0.0-*",
+        "kmon": "0.3.0",
+        "NFluent":"1.3.1.0"
     },
     "commands":{
-            
+
     }
 }
