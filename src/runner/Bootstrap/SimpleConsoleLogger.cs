@@ -19,6 +19,7 @@ namespace Iago
       this.logger.WriteInformation("".PadLeft(60,'-'));
     }
   }
+
   public class SimpleConsoleLogger : ILogger
   {
       private int currentScopeDepth;

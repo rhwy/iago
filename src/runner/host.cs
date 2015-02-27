@@ -17,6 +17,7 @@ using static System.Console;
 
 namespace Iago.Runner {
 
+  public enum Option { None,Some}
 
   public class Program {
     IApplicationEnvironment environment;
@@ -33,7 +34,7 @@ namespace Iago.Runner {
       writeColor("IAGO - K Spec Runner ","magenta");
       writeColor(Environment.NewLine,"gray");
       WriteLine($"== -----------------------------v0.1.0-beta4-3------");
-
+      WriteLine("");
       app.Run();
     }
 

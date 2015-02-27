@@ -38,9 +38,10 @@ namespace Iago.Runner
           .Where(type => type.IsClass)
           .ToList()
           .ForEach(type=> specTypes.Add(type));
-
+      
       using(logger.BeginScope("Specs found"))
       {
+
         foreach(var spec in specTypes)
         {
           logger.WriteInformation("Running [" + spec.Name + "]");
@@ -54,7 +55,7 @@ namespace Iago.Runner
           if(specifyField != null)
           {
             var specify = (specifyField.GetValue(instance) as Specify)?.Invoke();
-            logger.WriteInformation("Specify : " + specify);
+            logger.WriteInformation(" => " + specify);
           }
           var run = spec.GetMethod("Run");
           if(run != null)
