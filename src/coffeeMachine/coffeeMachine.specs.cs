@@ -19,12 +19,25 @@ namespace Iago.Samples.CoffeeMachineExperience
             Check.That(machine.Screen).IsEqualTo("Welcome");
           });
 
-          And("inserted coins should be 0",()=>{
-              Check.That(machine.InsertedCoins).IsEqualTo(1);
+          And("Total amount inserted should be 0",()=>{
+              Check.That(machine.TotalAmountInserted).IsEqualTo(1);
           });
         });
 
 
+        When("user insert coins",()=>{
+          var machine = new CoffeeMachine();
+          machine.Start();
+
+          Serie sample = Serie.Samples(
+            new [] { 1,1,2},
+            new [] { 1,2,3}
+          );
+          Then("their value are added to total amount", (values)=>{
+
+          }, 1,2,3);
+
+        });
     }
   }
 
