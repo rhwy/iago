@@ -38,39 +38,40 @@ namespace Iago.Runner
           .Where(type => type.IsClass)
           .ToList()
           .ForEach(type=> specTypes.Add(type));
-      
-      using(logger.BeginScope("Specs found"))
-      {
+
+      logger.WriteInformation("found specs");
+
+
 
         foreach(var spec in specTypes)
         {
-          logger.WriteInformation("Running [" + spec.Name + "]");
-
-          var instance = Activator.CreateInstance(spec);
-
-          var specifyField = spec
-              .GetFields(
-                BindingFlags.NonPublic | BindingFlags.Instance)
-              .FirstOrDefault(x=>x.FieldType == typeof(Specify));
-          if(specifyField != null)
+          using(logger.BeginScope("running " + spec.Name + ""))
           {
-            var specify = (specifyField.GetValue(instance) as Specify)?.Invoke();
-            logger.WriteInformation(" => " + specify);
-          }
-          var run = spec.GetMethod("Run");
-          if(run != null)
-          {
-            try
+            var instance = Activator.CreateInstance(spec);
+
+            var specifyField = spec
+                .GetFields(
+                  BindingFlags.NonPublic | BindingFlags.Instance)
+                .FirstOrDefault(x=>x.FieldType == typeof(Specify));
+            if(specifyField != null)
             {
-              run.Invoke(instance,null);
-            } catch(Exception ex)
-            {
-              logger.WriteError(ex.InnerException.Message);
+              var specify = (specifyField.GetValue(instance) as Specify)?.Invoke();
+              logger.WriteInformation("=> " + specify);
             }
+            var run = spec.GetMethod("Run");
+            if(run != null)
+            {
+              try
+              {
+                run.Invoke(instance,null);
+              } catch(Exception ex)
+              {
+                logger.WriteError(ex.InnerException.Message);
+              }
 
+            }
           }
         }
-      }
 
     }
   }

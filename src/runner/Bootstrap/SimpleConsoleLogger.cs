@@ -9,14 +9,17 @@ namespace Iago
   public class SimpleLoggerScope : IDisposable
   {
     private SimpleConsoleLogger logger;
-    public SimpleLoggerScope(SimpleConsoleLogger logger)
+    private object scope;
+    public SimpleLoggerScope(SimpleConsoleLogger logger, object scope)
     {
       this.logger = logger;
+      this.scope = scope;
     }
     public void Dispose()
     {
       this.logger.DisposeScope();
-      this.logger.WriteInformation("".PadLeft(60,'-'));
+      this.logger.WriteInformation($"end {scope} ".PadRight(60,'-'));
+      
     }
   }
 
@@ -75,9 +78,9 @@ namespace Iago
       public IDisposable BeginScope(object scope)
       {
 
-        this.WriteInformation($"--- {scope} ".PadRight(60,'-'));
+        this.WriteInformation($"{scope} ".PadRight(60,'-'));
         currentScopeDepth++;
-        return new SimpleLoggerScope(this);
+        return new SimpleLoggerScope(this,scope);
       }
 
       public bool IsEnabled(LogLevel logLevel)
