@@ -20,28 +20,34 @@ namespace Iago
   }
   public static class Specs {
     private static ILogger logger;
-    public static Func<ILogger> SetLogger = ()=> {
+    private static Func<ILogger> setLogger = ()=> {
         throw new NotImplementedException(); return null;};
 
+    public static void SetLogger(Func<ILogger> logDefinition)
+    {
+      setLogger = logDefinition;
+      logger = setLogger();
+    }
+
     public static void When(string definition, DefineAction act) {
-      WriteLine("\t[when] "+definition);
+      logger.WriteInformation("    [when] "+definition);
       act();
     }
 
     public static void Then(string definition, CheckAction assert) {
-      WriteLine("\t[then] "+definition);
+      logger.WriteInformation("      [then] "+definition);
       assert();
     }
     public static void Then(string definition,
       CheckActionWithSamples assert, params object[] values) {
-      WriteLine("\t[then] "+definition);
-      assert(values);
+        logger.WriteInformation("      [then] "+definition);
+        assert(values);
     }
 
 
 
     public static void And(string definition, Action assert){
-      WriteLine("\t[.And] "+definition);
+      logger.WriteInformation("      [.And] "+definition);
       assert();
     }
   }

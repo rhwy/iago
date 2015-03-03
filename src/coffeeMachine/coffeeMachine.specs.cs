@@ -20,7 +20,7 @@ namespace Iago.Samples.CoffeeMachineExperience
           });
 
           And("Total amount inserted should be 0",()=>{
-              Check.That(machine.TotalAmountInserted).IsEqualTo(1);
+              Check.That(machine.TotalAmountInserted).IsEqualTo(0);
           });
         });
 

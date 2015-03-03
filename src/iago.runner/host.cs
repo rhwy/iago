@@ -44,7 +44,7 @@ namespace Iago.Runner {
       IApplicationEnvironment appEnv,
       IServiceProvider services)
     {
-
+      Iago.Specs.SetLogger(()=> logger);
       app = new ApplicationHost(
         setupHostedConfiguration(appEnv),
         logger
