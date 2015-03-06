@@ -19,7 +19,7 @@ namespace Iago
     {
       this.logger.DisposeScope();
       this.logger.WriteInformation($"end {scope} ".PadRight(60,'-'));
-      
+
     }
   }
 
@@ -69,8 +69,8 @@ namespace Iago
           Console.ForegroundColor = ConsoleColor.Red;
           Console.Write("[err!] ");
           Console.Write(WriteTab());
-          Console.ResetColor();
           Console.WriteLine(state);
+          Console.ResetColor();
           return;
         }
 
