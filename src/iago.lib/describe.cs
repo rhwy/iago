@@ -2,7 +2,7 @@ namespace Iago
 {
   using System;
   using System.Dynamic;
-
+  using System.Linq;
   using System.Collections.Generic;
   using Microsoft.Framework.Logging;
 
@@ -78,8 +78,23 @@ namespace Iago
 
 
     public static void And(string definition, Action assert){
-      logger.WriteInformation("      [.And] "+definition);
-      assert();
+      try
+      {
+        assert();
+        logger.WriteInformation("      [.And] "+definition);
+      } catch(Exception ex)
+      {
+        var lines = ex.Message.Split(Environment.NewLine.ToCharArray());
+        var betterLines = lines.Skip(1).Select(line=>
+          "[----]        " + line);
+        var betterMessage = string.Join(Environment.NewLine,betterLines);
+        logger.WriteError(
+          "      [.And] "
+          +definition
+          + Environment.NewLine
+          + betterMessage);
+      }
+
     }
   }
 

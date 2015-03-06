@@ -34,6 +34,7 @@ namespace Iago.Samples.CoffeeMachineExperience
             new { coin=2,currentTotalExpected=3},
             new { coin=5,currentTotalExpected=8},
           };
+          
           Then("their value are added to total amount", (values)=>{
             machine.InsertCoin(values.coin);
 
