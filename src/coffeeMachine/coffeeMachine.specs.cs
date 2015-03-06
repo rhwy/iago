@@ -29,13 +29,18 @@ namespace Iago.Samples.CoffeeMachineExperience
           var machine = new CoffeeMachine();
           machine.Start();
 
-          Serie sample = Serie.Samples(
-            new [] { 1,1,2},
-            new [] { 1,2,3}
-          );
+          var serieOfCoinsToInsert = new []{
+            new { coin=1,currentTotalExpected=1},
+            new { coin=2,currentTotalExpected=3},
+            new { coin=5,currentTotalExpected=8},
+          };
           Then("their value are added to total amount", (values)=>{
+            machine.InsertCoin(values.coin);
 
-          }, 1,2,3);
+            Check.That(machine.TotalAmountInserted)
+              .IsEqualTo(values.currentTotalExpected);
+
+          }, serieOfCoinsToInsert);
 
         });
     }
