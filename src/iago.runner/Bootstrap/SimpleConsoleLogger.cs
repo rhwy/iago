@@ -49,7 +49,7 @@ namespace Iago
         if(logLevel == LogLevel.Information)
         {
           Console.ForegroundColor = ConsoleColor.Green;
-          Console.Write("[info] ");
+          Console.Write("[PASS] ");
           Console.ResetColor();
           Console.Write(WriteTab());
           Console.WriteLine(state);
@@ -58,7 +58,7 @@ namespace Iago
         if(logLevel == LogLevel.Warning)
         {
           Console.ForegroundColor = ConsoleColor.Yellow;
-          Console.Write("[warn] ");
+          Console.Write("[WARN] ");
           Console.Write(WriteTab());
           Console.ResetColor();
           Console.WriteLine(state);
@@ -67,7 +67,7 @@ namespace Iago
         if(logLevel == LogLevel.Error)
         {
           Console.ForegroundColor = ConsoleColor.Red;
-          Console.Write("[err!] ");
+          Console.Write("[FAIL] ");
           Console.Write(WriteTab());
           Console.WriteLine(state);
           Console.ResetColor();
