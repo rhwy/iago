@@ -1,6 +1,6 @@
 {
     "name":"iago.lib",
-    "version":"0.1.0-beta3-5",
+    "version":"0.1.1-beta3-1",
     "description":"Iago is a tool to write bdd like tests in kre. use `iago.runner` to execute your tests",
     "projectUrl":"https://github.com/rhwy/iago",
     "tags":["tdd", "bdd", "test", "kre"],
