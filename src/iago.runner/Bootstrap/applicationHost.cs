@@ -29,7 +29,7 @@ namespace Iago.Runner
     public void Run()
     {
       var hostedAssembly = Assembly.Load(Configuration.HostedApplicationName);
-      logger.WriteInformation(
+      logger.WriteWarning(
         $"scanning assembly [{hostedAssembly.GetName().Name}]");
 
       var specTypes = new List<Type>();
@@ -39,7 +39,7 @@ namespace Iago.Runner
           .ToList()
           .ForEach(type=> specTypes.Add(type));
 
-      logger.WriteInformation("found specs");
+      logger.WriteWarning("found specs");
 
 
 
