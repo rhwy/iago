@@ -54,6 +54,22 @@ namespace Iago
       act();
     }
 
+    public static void Sample(object input, object output)
+    {
+        Func<object,string> writeLines = (i)=>
+        {
+                if(i==null) return string.Empty;
+                var lines = i.ToString().Split(Environment.NewLine.ToCharArray());
+                var betterLines = lines.Select(line=> "[----]        " + line);
+                var betterMessage = string.Join(Environment.NewLine,betterLines);
+                return betterMessage;
+        };
+
+        logger.WriteWarning("|--[sample] ");
+        logger.WriteWarning("|-->input : " + Environment.NewLine + writeLines(input));
+        logger.WriteWarning("|-->output: " + Environment.NewLine + writeLines(output));
+
+    }
     public static void Then(string definition, CheckAction assert) {
       logger.WriteInformation("|    [then] "+definition);
       assert();
