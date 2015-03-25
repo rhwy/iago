@@ -2,13 +2,30 @@ namespace Iago.ConsoleWriter
 {
     using System.Text.RegularExpressions;
     using System.Collections.Generic;
+    using System;
+
+    public class BadConsoleWriteTokenException : Exception
+    {
+        public BadConsoleWriteTokenException(string message):base(message)
+        {
+        }
+    }
 
     public class ConsoleHelper
     {
-        public static ConsoleStringToken[] Tokenize(string input)
+        public static Func<string> TokenizePattern {get;set;} =
+            ()=>@"#(?<action>\w+)`(?<content>[^`]*)`";
+
+        public static ConsoleStringToken[] Tokenize(string input, string pattern = null)
         {
-            string pattern = @"#(?<action>\w+)`(?<content>[^`]*)`";
-            var rex = new Regex(pattern);
+            string currentPattern = pattern ?? TokenizePattern();
+            if(!currentPattern.Contains("action")
+                || !currentPattern.Contains("content"))
+                {
+                    throw new BadConsoleWriteTokenException(
+                        "your pattern does not contain action, and content groups");
+                }
+            var rex = new Regex(currentPattern);
             Match match = rex.Match(input);
             var tokens = new List<ConsoleStringToken>();
             var bufferInput = input;

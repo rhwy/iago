@@ -1,10 +1,7 @@
 using System;
 using System.IO;
 using Microsoft.Framework.Runtime;
-//using Microsoft.Framework.Runtime.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
-//using Microsoft.Framework.DependencyInjection.Fallback;
-//using Microsoft.Framework.DependencyInjection.ServiceLookup;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.ConfigurationModel.Json;
 using Microsoft.Framework.Logging;
@@ -29,11 +26,15 @@ namespace Iago.Runner {
     public void Main(params string[] args)
     {
 
-      WriteLine("== --------------------------------------------------");
+      var version = $"v{hostConfig.AppVersion}";
+
+      WriteLine("== ".PadRight(60,'-'));
       Write("==     ");
       writeColor("IAGO - K Spec Runner ","magenta");
       writeColor(Environment.NewLine,"gray");
-      WriteLine($"== -----------------------------{hostConfig.AppVersion}------");
+      Write($"== ".PadRight(40,'-'));
+      writeColor(version,"magenta");
+      WriteLine("".PadRight(20-version.Length,'-'));
       WriteLine("");
 
       try
@@ -81,9 +82,6 @@ namespace Iago.Runner {
     private static HostedConfiguration setupHostedConfiguration(
         IApplicationEnvironment appEnv, string appVersion)
     {
-        var asm = System.Reflection.Assembly.GetExecutingAssembly();
-        WriteLine(asm.GetName().Version);
-
         return new HostedConfiguration(
             path : appEnv.ApplicationBasePath,
             name : appEnv.ApplicationName,

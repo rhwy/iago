@@ -6,8 +6,6 @@ namespace Iago
   using System.Collections.Generic;
   using Microsoft.Framework.Logging;
 
-  using static System.Console;
-
   public delegate string Specify();
   public delegate string Description();
   public delegate void DefineAction();
@@ -31,7 +29,8 @@ namespace Iago
   public static class Specs {
     private static ILogger logger;
     private static Func<ILogger> setLogger = ()=> {
-        throw new NotImplementedException(); return null;};
+        throw new NotImplementedException();
+    };
 
     public static void SetLogger(Func<ILogger> logDefinition)
     {
@@ -54,7 +53,7 @@ namespace Iago
       act();
     }
 
-    public static void Sample(object input, object output)
+    public static void Sample(object input, object output, object context = null)
     {
         Func<object,string> writeLines = (i)=>
         {
@@ -66,8 +65,12 @@ namespace Iago
         };
 
         logger.WriteWarning("|--[sample] ");
-        logger.WriteWarning("|-->input : " + Environment.NewLine + writeLines(input));
-        logger.WriteWarning("|-->output: " + Environment.NewLine + writeLines(output));
+        if(context != null)
+        {
+        logger.WriteWarning("   - context:" + Environment.NewLine + writeLines(context));
+        }
+        logger.WriteWarning("   - input  : " + Environment.NewLine + writeLines(input));
+        logger.WriteWarning("   - output : " + Environment.NewLine + writeLines(output));
 
     }
     public static void Then(string definition, CheckAction assert) {
