@@ -6,9 +6,6 @@ namespace Iago.Runner
   using System.Reflection;
   using Microsoft.Framework.Logging;
 
-  using static System.Console;
-
-
   public delegate Type[] GetTypesWithTests(params string[] args);
 
   public class ApplicationHost

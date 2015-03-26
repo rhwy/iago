@@ -4,10 +4,7 @@ using Microsoft.Framework.Runtime;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.ConfigurationModel.Json;
-using Microsoft.Framework.Logging;
-using Microsoft.Framework.Logging.Console;
 using ILogger = Microsoft.Framework.Logging.ILogger;
-using System.Linq;
 using System.Collections.Generic;
 using static System.Console;
 

@@ -2,8 +2,6 @@ using System;
 using System.Linq;
 using Microsoft.Framework.Logging;
 
-using static System.Console;
-
 namespace Iago
 {
   public class SimpleLoggerScope : IDisposable
