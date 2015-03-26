@@ -25,6 +25,7 @@ namespace Iago.Runner {
 
       var version = $"v{hostConfig.AppVersion}";
 
+      /*
       WriteLine("== ".PadRight(60,'-'));
       Write("==     ");
       writeColor("IAGO - K Spec Runner ","magenta");
@@ -33,7 +34,9 @@ namespace Iago.Runner {
       writeColor(version,"magenta");
       WriteLine("".PadRight(20-version.Length,'-'));
       WriteLine("");
+      */
 
+      writeColor(IagoHeader.GetHeader(version),"cyan");
       try
       {
           app.Run();
