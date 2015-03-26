@@ -2,8 +2,6 @@ using System;
 using System.Linq;
 using Microsoft.Framework.Logging;
 
-using static System.Console;
-
 namespace Iago
 {
   public class SimpleLoggerScope : IDisposable
@@ -58,7 +56,7 @@ namespace Iago
         if(logLevel == LogLevel.Warning)
         {
           Console.ForegroundColor = ConsoleColor.Yellow;
-          Console.Write("[WARN] ");
+          Console.Write("[INFO] ");
           Console.Write(WriteTab());
           Console.ResetColor();
           Console.WriteLine(state);

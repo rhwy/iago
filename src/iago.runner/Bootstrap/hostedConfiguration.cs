@@ -6,17 +6,20 @@ namespace Iago.Runner
       public string HostedApplicationName {get;}
       public string ExecutionConfiguration {get;}
       public string HostedApplicationVersion {get;}
+      public string AppVersion {get;}
 
       public HostedConfiguration(
         string path = "",
         string name = "",
         string config = "",
-        string version = ""
+        string hostVersion = "",
+        string appVersion = ""
       ) {
         ExecutionPath = path;
         HostedApplicationName = name;
         ExecutionConfiguration = config;
-        HostedApplicationVersion = version;
+        HostedApplicationVersion = hostVersion;
+        AppVersion = appVersion;
       }
   }
 }

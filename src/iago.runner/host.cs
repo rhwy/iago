@@ -1,17 +1,11 @@
 using System;
 using System.IO;
 using Microsoft.Framework.Runtime;
-//using Microsoft.Framework.Runtime.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
-//using Microsoft.Framework.DependencyInjection.Fallback;
-//using Microsoft.Framework.DependencyInjection.ServiceLookup;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.ConfigurationModel.Json;
-using Microsoft.Framework.Logging;
-using Microsoft.Framework.Logging.Console;
 using ILogger = Microsoft.Framework.Logging.ILogger;
-using System.Linq;
-
+using System.Collections.Generic;
 using static System.Console;
 
 
@@ -21,7 +15,7 @@ namespace Iago.Runner {
 
   public class Program {
     IApplicationEnvironment environment;
-    IServiceProvider serviceProvider;
+    HostedConfiguration hostConfig;
     Configuration configuration;
     ApplicationHost app;
     ILogger logger =  new SimpleConsoleLogger();
@@ -29,26 +23,49 @@ namespace Iago.Runner {
     public void Main(params string[] args)
     {
 
-      WriteLine("== --------------------------------------------------");
+      var version = $"v{hostConfig.AppVersion}";
+
+      /*
+      WriteLine("== ".PadRight(60,'-'));
       Write("==     ");
       writeColor("IAGO - K Spec Runner ","magenta");
       writeColor(Environment.NewLine,"gray");
-      WriteLine($"== -----------------------------v0.1.0-beta4-3------");
+      Write($"== ".PadRight(40,'-'));
+      writeColor(version,"magenta");
+      WriteLine("".PadRight(20-version.Length,'-'));
       WriteLine("");
-      app.Run();
+      */
+
+      writeColor(IagoHeader.GetHeader(version),"cyan");
+      try
+      {
+          app.Run();
+      }
+      catch(Exception cex)
+      {
+        if (cex.GetType().Name == "RoslynCompilationException")
+            writeColor("[FAIL] compilation exception, please fix to run tests"+Environment.NewLine,"red");
+        else
+            writeColor($"[FAIL] {cex.GetType().Name}, please fix before running tests"+Environment.NewLine,"red");
+
+        writeColor("[FAIL] " + cex.Message + Environment.NewLine,"red");
+      }
     }
 
 
-    public Program(
-      IAssemblyLoaderContainer container,
-      IApplicationEnvironment appEnv,
-      IServiceProvider services)
+    public Program(IApplicationEnvironment appEnv)
     {
       Iago.Specs.SetLogger(()=> logger);
-      app = new ApplicationHost(
-        setupHostedConfiguration(appEnv),
-        logger
-      );
+
+      environment = appEnv;
+      var asm = System.Reflection.Assembly.GetExecutingAssembly();
+      var appVersion = asm.GetName().Version.ToString();
+
+      hostConfig = setupHostedConfiguration(appEnv,appVersion);
+      app = new ApplicationHost(hostConfig,logger);
+
+      //var values = Enum.GetValues(typeof(LogLevel));
+      //foreach(var val in values ) Console.WriteLine(val);
     }
 
     private static void writeColor(string text, string color = "white")
@@ -62,14 +79,16 @@ namespace Iago.Runner {
       Console.ResetColor();
     }
 
-    private static HostedConfiguration setupHostedConfiguration(IApplicationEnvironment appEnv)
+    private static HostedConfiguration setupHostedConfiguration(
+        IApplicationEnvironment appEnv, string appVersion)
     {
-      return new HostedConfiguration(
-        path : appEnv.ApplicationBasePath,
-        name : appEnv.ApplicationName,
-        config : appEnv.Configuration,
-        version : appEnv.Version
-      );
+        return new HostedConfiguration(
+            path : appEnv.ApplicationBasePath,
+            name : appEnv.ApplicationName,
+            config : appEnv.Configuration,
+            hostVersion : appEnv.Version,
+            appVersion : appVersion
+        );
     }
 
   }
