@@ -83,8 +83,20 @@ namespace Iago.ConsoleWriter.Specs
                   Check.That(tokens.Extracting("State"))
                     .ContainsExactly(expected.Select(x=>x.State));
               });
+
+              It("returns a ConsoleTokens Class", ()=> {
+
+                 string input = "hello #red`word`";
+                 var tokens = ConsoleHelper.Tokenize(input);
+
+                 Check.That(tokens.GetType()).IsEqualTo(typeof(ConsoleTokens));
+              });
           });
 
+
+          Describe("function WriteConsole",()=>{
+
+          });
       }
     }
 }

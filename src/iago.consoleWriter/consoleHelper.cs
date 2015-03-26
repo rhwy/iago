@@ -16,7 +16,7 @@ namespace Iago.ConsoleWriter
         public static Func<string> TokenizePattern {get;set;} =
             ()=>@"#(?<action>\w+)`(?<content>[^`]*)`";
 
-        public static ConsoleStringToken[] Tokenize(string input, string pattern = null)
+        public static ConsoleTokens Tokenize(string input, string pattern = null)
         {
             string currentPattern = pattern ?? TokenizePattern();
             if(!currentPattern.Contains("action")
@@ -51,7 +51,7 @@ namespace Iago.ConsoleWriter
                 if(lastIndexEnd>input.Length) lastIndexEnd = input.Length;
                 match = match.NextMatch();
             }
-            return tokens.ToArray();
+            return new ConsoleTokens(tokens);
         }
     }
 
