@@ -4,13 +4,6 @@ namespace Iago.ConsoleWriter
     using System.Collections.Generic;
     using System;
 
-    public class BadConsoleWriteTokenException : Exception
-    {
-        public BadConsoleWriteTokenException(string message):base(message)
-        {
-        }
-    }
-
     public class ConsoleHelper
     {
         public static Func<string> TokenizePattern {get;set;} =

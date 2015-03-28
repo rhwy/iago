@@ -17,8 +17,7 @@ namespace Iago.Runner
     A cool test and spec runner for DNX
 
 --------------------------------------------------------
-
-    ";
+";
         return header;
        }
     }

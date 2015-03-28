@@ -25,22 +25,12 @@ namespace Iago.Runner {
 
       var version = $"v{hostConfig.AppVersion}";
 
-      /*
-      WriteLine("== ".PadRight(60,'-'));
-      Write("==     ");
-      writeColor("IAGO - K Spec Runner ","magenta");
-      writeColor(Environment.NewLine,"gray");
-      Write($"== ".PadRight(40,'-'));
-      writeColor(version,"magenta");
-      WriteLine("".PadRight(20-version.Length,'-'));
-      WriteLine("");
-      */
-
       writeColor(IagoHeader.GetHeader(version),"cyan");
       try
       {
           app.Run();
       }
+      
       catch(Exception cex)
       {
         if (cex.GetType().Name == "RoslynCompilationException")
