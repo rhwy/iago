@@ -39,17 +39,17 @@ namespace Iago
     }
 
     public static void When(string definition, DefineAction act) {
-      logger.WriteInformation("|  [when] "+definition);
+      logger.WriteInformation("[when] "+definition);
       act();
     }
 
     public static void Describe(string definition, DefineAction act) {
-      logger.WriteInformation("|  [describe] "+definition);
+      logger.WriteInformation("[describe] "+definition);
       act();
     }
 
     public static void It(string definition, DefineAction act) {
-      logger.WriteInformation("|  [it] "+definition);
+      logger.WriteInformation("[it] "+definition);
       act();
     }
 
@@ -58,35 +58,37 @@ namespace Iago
         Func<object,string> writeLines = (i)=>
         {
                 if(i==null) return string.Empty;
-                var lines = i.ToString().Split(Environment.NewLine.ToCharArray());
-                var betterLines = lines.Select(line=> "[----]        " + line);
+                var lines = i.ToString()
+                    .Split(Environment.NewLine.ToCharArray())
+                    .Where(x=>!string.IsNullOrEmpty(x));
+                var betterLines = lines.Select(line=> "      " + line);
                 var betterMessage = string.Join(Environment.NewLine,betterLines);
                 return betterMessage;
         };
 
-        logger.WriteWarning("|--[sample] ");
+        logger.WriteWarning("sample");
         if(context != null)
         {
-        logger.WriteWarning("   - context:" + Environment.NewLine + writeLines(context));
+        logger.WriteWarning(" - context:" + Environment.NewLine + writeLines(context));
         }
-        logger.WriteWarning("   - input  : " + Environment.NewLine + writeLines(input));
-        logger.WriteWarning("   - output : " + Environment.NewLine + writeLines(output));
+        logger.WriteWarning(" - input  : " + Environment.NewLine + writeLines(input));
+        logger.WriteWarning(" - output : " + Environment.NewLine + writeLines(output));
 
     }
     public static void Then(string definition, CheckAction assert) {
-      logger.WriteInformation("|    [then] "+definition);
+      logger.WriteInformation("[then] "+definition);
       assert();
     }
     public static void Then<T>(string definition,
       CheckActionWithSamples<T> assert, T values) {
-        logger.WriteInformation("|    [then] "+definition);
+        logger.WriteInformation("[then] "+definition);
         assert(values);
     }
 
     public static void Then<T>(string definition,
       CheckActionWithSamples<T> assert, IEnumerable<T> values) {
 
-        logger.WriteInformation("|    [then] "+definition);
+        logger.WriteInformation("[then] "+definition);
         int testCounter=0;
         foreach(T value in values)
         {
@@ -110,15 +112,15 @@ namespace Iago
       try
       {
         assert();
-        logger.WriteInformation("|    [.And] "+definition);
+        logger.WriteInformation("[.And] "+definition);
       } catch(Exception ex)
       {
         var lines = ex.Message.Split(Environment.NewLine.ToCharArray());
         var betterLines = lines.Skip(1).Select(line=>
-          "[----]        " + line);
+          "    " + line);
         var betterMessage = string.Join(Environment.NewLine,betterLines);
         logger.WriteError(
-          "|    [.And] "
+          "[.And] "
           +definition
           + Environment.NewLine
           + betterMessage);

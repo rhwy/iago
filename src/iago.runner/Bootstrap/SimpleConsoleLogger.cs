@@ -30,7 +30,7 @@ namespace Iago
       }
 
       private string WriteTab () {
-        return string.Join("",Enumerable.Range(1,CurrentScopeDepth).Select(x=>"\t"));
+        return string.Join("",Enumerable.Range(1,CurrentScopeDepth).Select(x=>" "));
       }
 
       public void DisposeScope()
@@ -44,10 +44,26 @@ namespace Iago
         LogLevel logLevel, int eventId = 0, object state = null,
         Exception exception = null, Func<object, Exception, string> formatter = null)
       {
+        var timestamp = ApplicationTime.FormatTimer(ApplicationTime.StopTime);
+        var lines = state?.ToString()
+            .Split(Environment.NewLine.ToCharArray())
+            .Where(x=>!string.IsNullOrEmpty(x));
+        if(lines.Count()>1)
+        {
+            lines.ToList().ForEach(x=>Write(logLevel,eventId,x));
+            return;
+        }
+
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+        Console.Write(timestamp);
+        Console.ResetColor();
+
+
+
         if(logLevel == LogLevel.Information)
         {
           Console.ForegroundColor = ConsoleColor.Green;
-          Console.Write("[PASS] ");
+          Console.Write(" ✔ ");
           Console.ResetColor();
           Console.Write(WriteTab());
           Console.WriteLine(state);
@@ -56,7 +72,7 @@ namespace Iago
         if(logLevel == LogLevel.Warning)
         {
           Console.ForegroundColor = ConsoleColor.Yellow;
-          Console.Write("[INFO] ");
+          Console.Write(" ⇒ ");
           Console.Write(WriteTab());
           Console.ResetColor();
           Console.WriteLine(state);
@@ -65,7 +81,7 @@ namespace Iago
         if(logLevel == LogLevel.Error)
         {
           Console.ForegroundColor = ConsoleColor.Red;
-          Console.Write("[FAIL] ");
+          Console.Write(" ✘ ");
           Console.Write(WriteTab());
           Console.WriteLine(state);
           Console.ResetColor();

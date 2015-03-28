@@ -30,7 +30,7 @@ namespace Iago.Runner {
       {
           app.Run();
       }
-      
+
       catch(Exception cex)
       {
         if (cex.GetType().Name == "RoslynCompilationException")
