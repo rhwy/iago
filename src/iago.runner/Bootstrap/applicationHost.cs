@@ -36,13 +36,17 @@ namespace Iago.Runner
           .ToList()
           .ForEach(type=> specTypes.Add(type));
 
-      logger.WriteWarning("found specs");
+
+        string specPlural = "Specification" +
+            (specTypes.Count>1 ? "s" : "");
+       logger.WriteWarning($"found {specTypes.Count} {specPlural}");
 
 
 
         foreach(var spec in specTypes)
         {
-          using(logger.BeginScope("running " + spec.Name + ""))
+          string name = spec.Name.Substring(0,spec.Name.Length-5);
+          using(logger.BeginScope("running " + name + ""))
           {
             var instance = Activator.CreateInstance(spec);
 
@@ -54,6 +58,7 @@ namespace Iago.Runner
             {
               var specify = (specifyField.GetValue(instance) as Specify)?.Invoke();
               logger.WriteInformation("=> " + specify);
+              logger.WriteInformation("");
             }
             var run = spec.GetMethod("Run");
             if(run != null)
@@ -68,6 +73,7 @@ namespace Iago.Runner
 
             }
           }
+          logger.WriteInformation("");
         }
 
     }

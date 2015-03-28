@@ -16,7 +16,7 @@ namespace Iago
     public void Dispose()
     {
       this.logger.DisposeScope();
-      this.logger.WriteInformation($"end {scope} ".PadRight(60,'-'));
+      this.logger.WriteInformation($"end {scope} ".PadRight(60,' '));
 
     }
   }
@@ -72,10 +72,21 @@ namespace Iago
         if(logLevel == LogLevel.Warning)
         {
           Console.ForegroundColor = ConsoleColor.Yellow;
-          Console.Write(" ⇒ ");
+          Console.Write(" ● ");
           Console.Write(WriteTab());
-          Console.ResetColor();
           Console.WriteLine(state);
+          Console.ResetColor();
+
+          return;
+        }
+        if(logLevel == LogLevel.Verbose)
+        {
+          Console.ForegroundColor = ConsoleColor.DarkGray;
+          Console.Write(" ○ ");
+          Console.Write(WriteTab());
+          Console.WriteLine(state);
+          Console.ResetColor();
+
           return;
         }
         if(logLevel == LogLevel.Error)
@@ -92,7 +103,7 @@ namespace Iago
       public IDisposable BeginScope(object scope)
       {
 
-        this.WriteInformation($"{scope} ".PadRight(60,'-'));
+        this.WriteInformation($"{scope} ".PadRight(60,' '));
         currentScopeDepth++;
         return new SimpleLoggerScope(this,scope);
       }

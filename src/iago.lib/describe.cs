@@ -39,7 +39,7 @@ namespace Iago
     }
 
     public static void When(string definition, DefineAction act) {
-      logger.WriteInformation("[when] "+definition);
+      logger.WriteInformation(" [when] "+definition);
       act();
     }
 
@@ -49,7 +49,7 @@ namespace Iago
     }
 
     public static void It(string definition, DefineAction act) {
-      logger.WriteInformation("[it] "+definition);
+      logger.WriteInformation(" [it] "+definition);
       act();
     }
 
@@ -66,29 +66,29 @@ namespace Iago
                 return betterMessage;
         };
 
-        logger.WriteWarning("sample");
+        logger.WriteVerbose(" sample");
         if(context != null)
         {
-        logger.WriteWarning(" - context:" + Environment.NewLine + writeLines(context));
+        logger.WriteVerbose(" - context:" + Environment.NewLine + writeLines(context));
         }
-        logger.WriteWarning(" - input  : " + Environment.NewLine + writeLines(input));
-        logger.WriteWarning(" - output : " + Environment.NewLine + writeLines(output));
+        logger.WriteVerbose(" - input  : " + Environment.NewLine + writeLines(input));
+        logger.WriteVerbose(" - output : " + Environment.NewLine + writeLines(output));
 
     }
     public static void Then(string definition, CheckAction assert) {
-      logger.WriteInformation("[then] "+definition);
+      logger.WriteInformation("  [then] "+definition);
       assert();
     }
     public static void Then<T>(string definition,
       CheckActionWithSamples<T> assert, T values) {
-        logger.WriteInformation("[then] "+definition);
+        logger.WriteInformation("  [then] "+definition);
         assert(values);
     }
 
     public static void Then<T>(string definition,
       CheckActionWithSamples<T> assert, IEnumerable<T> values) {
 
-        logger.WriteInformation("[then] "+definition);
+        logger.WriteInformation("  [then] "+definition);
         int testCounter=0;
         foreach(T value in values)
         {

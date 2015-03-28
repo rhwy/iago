@@ -5,6 +5,12 @@ namespace Iago.ConsoleWriter.Specs
     using NFluent;
     using System.Linq;
 
+    public class ConsoleTokenTransformerSpecs
+    {
+      Specify that = () =>
+          "it parses input console template and write it";
+
+    }
     public class ConsoleHelperSpecs
     {
       Specify that = () =>
