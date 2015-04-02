@@ -9,49 +9,6 @@ namespace Iago {
 
   }
 
-  public class ApplicationTime
-  {
-      private static Func<DateTime> timeNow = ()=> DateTime.Now;
-
-      public static void SetTimeProvider(Func<DateTime> time)
-      {
-          timeNow = time;
-      }
-
-      public static DateTime Now
-      {
-          get
-          {
-              return timeNow();
-          }
-      }
-
-      private static DateTime start = timeNow();
-
-      public static TimeSpan StopTime
-      {
-          get
-          {
-              return (timeNow() - start);
-          }
-      }
-
-      private static Func<TimeSpan,string> timerFormat = (s) =>
-      {
-
-          return $"[{s.Seconds:00}:{s.Milliseconds:000}]";
-      };
-
-      public static void SetDefaultFormat(Func<TimeSpan,string> format)
-      {
-          timerFormat = format;
-      }
-
-      public static string FormatTimer(TimeSpan span)
-      {
-          return timerFormat(span);
-      }
-  }
 
   public class Success<T> : Result<T>
   {
@@ -100,7 +57,20 @@ namespace Iago {
   public class Option<T>
   {
     public T Value {get;}
-    public Option(T value)
+    public static Option<T> Nothing {get;}= new Option<T>();
+    public static Option<T> Of(T value)
+    {
+        if(value == null)
+        {
+            return Nothing;
+        }
+        return new Option<T>(value);
+    }
+    private Option()
+    {
+        Value = default(T);
+    }
+    private Option(T value)
     {
       Value = value;
     }

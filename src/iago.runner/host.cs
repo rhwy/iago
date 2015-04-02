@@ -6,7 +6,7 @@ using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.ConfigurationModel.Json;
 using ILogger = Microsoft.Framework.Logging.ILogger;
 using System.Collections.Generic;
-using static System.Console;
+//using static System.Console;
 
 
 namespace Iago.Runner {
@@ -18,10 +18,16 @@ namespace Iago.Runner {
     HostedConfiguration hostConfig;
     Configuration configuration;
     ApplicationHost app;
+
+    AppConsole appConsole = new AppConsole();
+
     ILogger logger =  new SimpleConsoleLogger();
+
 
     public void Main(params string[] args)
     {
+        configuration = new Configuration();
+        configuration.AddCommandLine(args);
 
       var version = $"v{hostConfig.AppVersion}";
 
@@ -40,11 +46,22 @@ namespace Iago.Runner {
 
         writeColor("[FAIL] " + cex.Message + Environment.NewLine,"red");
       }
+
+      var save = configuration.Get("out:file");
+      if(!string.IsNullOrEmpty(save))
+      {
+          if(!save.StartsWith("/"))
+          {
+              save = Path.Combine(environment.ApplicationBasePath,save);
+          }
+          appConsole.Save((log)=> File.WriteAllText(save,log));
+      }
     }
 
 
     public Program(IApplicationEnvironment appEnv)
     {
+
       Iago.Specs.SetLogger(()=> logger);
 
       environment = appEnv;
@@ -58,14 +75,14 @@ namespace Iago.Runner {
       //foreach(var val in values ) Console.WriteLine(val);
     }
 
-    private static void writeColor(string text, string color = "white")
+    private void writeColor(string text, string color = "white")
     {
       ConsoleColor foregroundColor;
       if(Enum.TryParse<ConsoleColor>(color, true, out foregroundColor ))
       {
         Console.ForegroundColor = foregroundColor;
       }
-      Write(text);
+      appConsole.Write(text);
       Console.ResetColor();
     }
 

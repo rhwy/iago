@@ -1,11 +1,11 @@
 {
     "name":"iago.runner",
-    "version":"0.1.1-beta3-1",
+    "version":"0.2.0-beta3-1",
     "description":"Iago runner is a tool to run bdd like tests in kre",
     "projectUrl":"https://github.com/rhwy/iago",
     "tags":["tdd", "bdd", "test", "kre"],
     "dependencies":{
-      "iago.lib":"0.1-*",
+      "iago.lib":"0.2-*",
       /*"iago.consoleWriter":"0.0-*",*/
       "Microsoft.Framework.Runtime":"1.0.0-beta3",
       "Microsoft.Framework.ConfigurationModel":"1.0.0-beta3",

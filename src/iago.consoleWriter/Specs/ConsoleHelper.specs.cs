@@ -4,13 +4,56 @@ namespace Iago.ConsoleWriter.Specs
     using static Iago.Specs;
     using NFluent;
     using System.Linq;
+    using System;
 
-    public class ConsoleTokenTransformerSpecs
+    public class ConsoleTokensSpecs
     {
-      Specify that = () =>
-          "it parses input console template and write it";
+        Specify that = () =>
+          "it defines a serie of qualified commands";
+
 
     }
+
+
+    public class OutputWrite<T>
+    {
+        private T input;
+
+        private OutputWrite(T input)
+        {
+            this.input = input;
+        }
+        public static OutputWrite<T> Source(T input)
+        {
+            return new OutputWrite<T>(input);
+        }
+
+        public TU Then<TU>(Func<T,TU> transform)
+        {
+            return transform(input);
+        }
+    }
+
+    public class OutputWriteSpecs
+    {
+        Specify that = ()=>
+            "it defines a chainable command for writing things to outputs";
+
+        public void Run()
+        {
+            Describe("default usage",()=>{
+
+                string input = "Message : #green`[info]` say #yellow`hello` again";
+
+                var result = OutputWrite<string>
+                    .Source(input)
+                    .Then(f=>f.Count());
+
+
+            });
+        }
+    }
+
     public class ConsoleHelperSpecs
     {
       Specify that = () =>
@@ -99,10 +142,6 @@ namespace Iago.ConsoleWriter.Specs
               });
           });
 
-
-          Describe("function WriteConsole",()=>{
-
-          });
       }
     }
 }
