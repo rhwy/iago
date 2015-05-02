@@ -8,6 +8,10 @@
     },
     "commands":{
             "test": "iago.runner",
-            "ct" : "kmon --ext cs --server test",
+            "ct" : "kmon --ext cs --server test"
+    },
+    "frameworks": {
+        "dnx451": {},
+        "dnxcore50": {}
     }
 }

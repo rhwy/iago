@@ -4,7 +4,7 @@ namespace Iago.Runner
   using System.Collections.Generic;
   using System.Linq;
   using System.Reflection;
-  using Microsoft.Framework.Logging;
+  using Iago.Abstractions;
 
   public delegate Type[] GetTypesWithTests(params string[] args);
 
@@ -20,13 +20,13 @@ namespace Iago.Runner
       ILogger logger = null)
     {
       Configuration = hostedConfiguration;
-      this.logger = logger ?? new SimpleConsoleLogger();
+      this.logger = logger == null ? new SimpleConsoleLogger() : logger;
     }
 
     public void Run()
     {
       var hostedAssembly = Assembly.Load(Configuration.HostedApplicationName);
-      logger.WriteWarning(
+      logger.LogWarning(
         $"scanning assembly [{hostedAssembly.GetName().Name}]");
 
       var specTypes = new List<Type>();
@@ -39,7 +39,7 @@ namespace Iago.Runner
 
         string specPlural = "Specification" +
             (specTypes.Count>1 ? "s" : "");
-       logger.WriteWarning($"found {specTypes.Count} {specPlural}");
+       logger.LogWarning($"found {specTypes.Count} {specPlural}");
 
 
 
@@ -57,8 +57,8 @@ namespace Iago.Runner
             if(specifyField != null)
             {
               var specify = (specifyField.GetValue(instance) as Specify)?.Invoke();
-              logger.WriteInformation("=> " + specify);
-              logger.WriteInformation("");
+              logger.LogInformation("=> " + specify);
+              logger.LogInformation("");
             }
             var run = spec.GetMethod("Run");
             if(run != null)
@@ -68,12 +68,12 @@ namespace Iago.Runner
                 run.Invoke(instance,null);
               } catch(Exception ex)
               {
-                logger.WriteError(ex.InnerException.Message);
+                logger.LogError(ex.InnerException.Message);
               }
 
             }
           }
-          logger.WriteInformation("");
+          logger.LogInformation("");
         }
 
     }

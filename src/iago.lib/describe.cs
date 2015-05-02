@@ -4,13 +4,12 @@ namespace Iago
   using System.Dynamic;
   using System.Linq;
   using System.Collections.Generic;
-  using Microsoft.Framework.Logging;
-
+  using Iago.Abstractions;
+  
   public delegate string Specify();
   public delegate string Description();
   public delegate void DefineAction();
   public delegate void CheckAction();
-  //public delegate void CheckActionWithSamples(dynamic values);
   public delegate void CheckActionWithSamples<T>(T values);
 
   public class Serie
@@ -39,17 +38,17 @@ namespace Iago
     }
 
     public static void When(string definition, DefineAction act) {
-      logger.WriteInformation(" [when] "+definition);
+      logger.LogInformation(" [when] "+definition);
       act();
     }
 
     public static void Describe(string definition, DefineAction act) {
-      logger.WriteInformation("[describe] "+definition);
+      logger.LogInformation("[describe] "+definition);
       act();
     }
 
     public static void It(string definition, DefineAction act) {
-      logger.WriteInformation(" [it] "+definition);
+      logger.LogInformation(" [it] "+definition);
       act();
     }
 
@@ -66,29 +65,29 @@ namespace Iago
                 return betterMessage;
         };
 
-        logger.WriteVerbose(" sample");
+        logger.LogVerbose(" sample");
         if(context != null)
         {
-        logger.WriteVerbose(" - context:" + Environment.NewLine + writeLines(context));
+        logger.LogVerbose(" - context:" + Environment.NewLine + writeLines(context));
         }
-        logger.WriteVerbose(" - input  : " + Environment.NewLine + writeLines(input));
-        logger.WriteVerbose(" - output : " + Environment.NewLine + writeLines(output));
+        logger.LogVerbose(" - input  : " + Environment.NewLine + writeLines(input));
+        logger.LogVerbose(" - output : " + Environment.NewLine + writeLines(output));
 
     }
     public static void Then(string definition, CheckAction assert) {
-      logger.WriteInformation("  [then] "+definition);
+      logger.LogInformation("  [then] "+definition);
       assert();
     }
     public static void Then<T>(string definition,
       CheckActionWithSamples<T> assert, T values) {
-        logger.WriteInformation("  [then] "+definition);
+        logger.LogInformation("  [then] "+definition);
         assert(values);
     }
 
     public static void Then<T>(string definition,
       CheckActionWithSamples<T> assert, IEnumerable<T> values) {
 
-        logger.WriteInformation("  [then] "+definition);
+        logger.LogInformation("  [then] "+definition);
         int testCounter=0;
         foreach(T value in values)
         {
@@ -112,14 +111,14 @@ namespace Iago
       try
       {
         assert();
-        logger.WriteInformation("[.And] "+definition);
+        logger.LogInformation("[.And] "+definition);
       } catch(Exception ex)
       {
         var lines = ex.Message.Split(Environment.NewLine.ToCharArray());
         var betterLines = lines.Skip(1).Select(line=>
           "    " + line);
         var betterMessage = string.Join(Environment.NewLine,betterLines);
-        logger.WriteError(
+        logger.LogError(
           "[.And] "
           +definition
           + Environment.NewLine
@@ -129,7 +128,7 @@ namespace Iago
     }
   }
 
-  [System.Serializable]
+  [Serializable]
   public class SampleSeriesException : Exception
   {
       public static string GetMessageFromNumber(int number, Exception inner=null)

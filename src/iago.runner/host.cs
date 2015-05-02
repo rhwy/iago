@@ -1,16 +1,9 @@
-using System;
-using System.IO;
-using Microsoft.Framework.Runtime;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.ConfigurationModel;
-using Microsoft.Framework.ConfigurationModel.Json;
-using ILogger = Microsoft.Framework.Logging.ILogger;
-using System.Collections.Generic;
-//using static System.Console;
-
-
 namespace Iago.Runner {
-
+  using System;
+  using System.IO;
+  using Microsoft.Framework.Runtime;
+  using Microsoft.Framework.ConfigurationModel;
+  using Iago.Abstractions;
   public enum Option { None,Some}
 
   public class Program {
