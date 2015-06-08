@@ -2,14 +2,14 @@ namespace Iago.Runner {
   using System;
   using System.IO;
   using Microsoft.Framework.Runtime;
-  using Microsoft.Framework.ConfigurationModel;
+  using Microsoft.Framework.Configuration;
   using Iago.Abstractions;
   public enum Option { None,Some}
 
   public class Program {
     IApplicationEnvironment environment;
     HostedConfiguration hostConfig;
-    Configuration configuration;
+    IConfiguration configuration;
     ApplicationHost app;
 
     AppConsole appConsole = new AppConsole();
@@ -19,9 +19,10 @@ namespace Iago.Runner {
 
     public void Main(params string[] args)
     {
-        configuration = new Configuration();
-        configuration.AddCommandLine(args);
-
+        var configurationBuilder = new ConfigurationBuilder(environment.ApplicationBasePath)
+          .AddCommandLine(args);
+        configuration = configurationBuilder.Build();
+        
       var version = $"v{hostConfig.AppVersion}";
 
       writeColor(IagoHeader.GetHeader(version),"cyan");
@@ -82,13 +83,25 @@ namespace Iago.Runner {
     private static HostedConfiguration setupHostedConfiguration(
         IApplicationEnvironment appEnv, string appVersion)
     {
-        return new HostedConfiguration(
+      HostedConfiguration config;
+       try
+       {
+         config = new HostedConfiguration(
             path : appEnv.ApplicationBasePath,
             name : appEnv.ApplicationName,
             config : appEnv.Configuration,
             hostVersion : appEnv.Version,
             appVersion : appVersion
         );
+       }
+       catch (System.Exception e) 
+       {
+         config = new HostedConfiguration();
+         Console.WriteLine(e.Message);
+         Console.WriteLine(appEnv);
+       }
+       return config;
+        
     }
 
   }

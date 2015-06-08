@@ -26,12 +26,16 @@ namespace Iago.ConsoleWriter.Specs
         {
             Describe("default usage",()=>{
 
-                string input = "Message : #green`[info]` say #yellow`hello` again";
-
-                var result = OutputWrite<string>
-                    .Source(input)
-                    .Then(f=>f.Count());
-
+                It("builds a source writer from Factory and passes it to then",()=>{
+                    //string input = "Message : #green`[info]` say #yellow`hello` again";
+                    string input = "123456789";
+                    var result = OutputWrite<string>
+                        .Source(input)
+                        .Then(f=>f.Count());
+    
+                    Check.That(result).IsEqualTo(8);
+                });
+                
 
             });
         }

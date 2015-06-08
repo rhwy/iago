@@ -1,12 +1,15 @@
 {
-    "version":"0.2.0",
+    "version":"0.4.0-beta6",
     "name":"iago.consoleWriter.specs",
     "dependencies":{
         "NFluent":"1.3.1.0",
-        "iago.consoleWriter":"",
-        "iago.runner":"0.1.0-*"
+        "kmon": "0.4.0-*",
+        "iago.lib":{"version": "0.4-*", "type": "build"},
+        "iago.consoleWriter":{"version": "0.1", "type": "build"},
+        "iago.runner":{"version": "0.1", "type": "build"}
     },
     "commands":{
-            "test": "iago.runner"
+            "test": "iago.runner",
+            "mon": "kmon --ext cs,json,js --server test"
     }
 }

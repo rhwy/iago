@@ -28,7 +28,7 @@ namespace Iago.Runner
       var hostedAssembly = Assembly.Load(Configuration.HostedApplicationName);
       logger.LogWarning(
         $"scanning assembly [{hostedAssembly.GetName().Name}]");
-
+      logger.LogWarning($"working path [{Configuration.ExecutionPath}]");
       var specTypes = new List<Type>();
       hostedAssembly.ExportedTypes
           .Where(type => type.Name.ToLower().EndsWith("specs"))

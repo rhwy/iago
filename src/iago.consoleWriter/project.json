@@ -5,5 +5,12 @@
     },
     "commands":{
             
+    },
+    "frameworks": {
+        "dnx451": {
+             "dependencies":{
+                    
+                }
+        }
     }
 }
