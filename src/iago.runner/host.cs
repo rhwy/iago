@@ -55,18 +55,16 @@ namespace Iago.Runner {
 
     public Program(IApplicationEnvironment appEnv)
     {
-
+ 
       Iago.Specs.SetLogger(()=> logger);
 
       environment = appEnv;
       var asm = System.Reflection.Assembly.GetExecutingAssembly();
       var appVersion = asm.GetName().Version.ToString();
-
+       
       hostConfig = setupHostedConfiguration(appEnv,appVersion);
       app = new ApplicationHost(hostConfig,logger);
-
-      //var values = Enum.GetValues(typeof(LogLevel));
-      //foreach(var val in values ) Console.WriteLine(val);
+      
     }
 
     private void writeColor(string text, string color = "white")

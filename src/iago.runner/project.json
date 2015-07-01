@@ -13,7 +13,7 @@
         "Microsoft.Framework.Configuration.CommandLine":"1.0.0-beta6-*"
     },
     "commands":{
-             
+        "test":"run"     
     },
     "frameworks": {
         "dnx451": {
