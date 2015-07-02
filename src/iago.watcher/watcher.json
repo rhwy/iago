@@ -1,0 +1,17 @@
+{
+	"continuousPolling":false,
+	"pollFrequency":150,
+	"detectEvents":{
+		"directory":{
+			"create":true,
+			"delete":true,
+			"rename":true
+		},
+		"file":{
+			"create":true,
+			"change":true,
+			"delete":true,
+			"rename":true
+		}
+	}
+}
