@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+		"kmon":"0.4.0",
+		"FSWatcher": "0.1.0",
+		"Microsoft.Framework.Runtime":"1.0.0-beta5",
+		"Microsoft.Framework.Configuration":"1.0.0-beta6",
+		"Microsoft.Framework.Configuration.Json": "1.0.0-beta5",
+		"Microsoft.Framework.Configuration.CommandLine": "1.0.0-beta6"
+	},
+	"commands": {
+		"run":"iago.watcher",
+		"mon":"kmon --server run --ext cs"
+	}
+}
