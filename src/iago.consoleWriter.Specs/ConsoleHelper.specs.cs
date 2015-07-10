@@ -33,7 +33,7 @@ namespace Iago.ConsoleWriter.Specs
                         .Source(input)
                         .Then(f=>f.Count());
     
-                    Check.That(result).IsEqualTo(8);
+                    Check.That(result).IsEqualTo(9);
                 });
                 
 
