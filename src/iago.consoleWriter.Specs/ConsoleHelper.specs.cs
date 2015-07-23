@@ -4,8 +4,8 @@ namespace Iago.ConsoleWriter.Specs
     using static Iago.Specs;
     using NFluent;
     using System.Linq;
-    using System;
-
+   
+  
     public class ConsoleTokensSpecs
     {
         Specify that = () =>

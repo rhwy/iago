@@ -1,4 +1,4 @@
-namespace Iago.FolderMonitor
+namespace Watchbird
 {
 	using System;
 	using static System.Console;
@@ -11,25 +11,30 @@ namespace Iago.FolderMonitor
 	using System.Diagnostics;
 	
 	
+	public class BirdEye
+	{
+		
+	}
 	public class Program
 	{
 		IApplicationEnvironment environment;
-		static DateTime start = ApplicationTime.Now;
-		static Func<string> stamp = () => new DateTime((ApplicationTime.Now-start).Ticks).ToString("ss:ffffff");
-		
 		Action<string> log = (m) => {
-			WriteLine($"[{stamp()}] {m}"); 
+			var currentColor = Console.ForegroundColor;
+			Console.ForegroundColor = ConsoleColor.DarkGray;
+			Write($"[{ApplicationTime.GetStamp()}]"); 
+			Console.ForegroundColor = currentColor;
+			WriteLine($" {m}");
 		};
 		
 		public Program(IApplicationEnvironment appEnv)
 	    {
 	 
 	      environment = appEnv;
-		  
+		  ApplicationTime.Start();
 	      var asm = System.Reflection.Assembly.GetExecutingAssembly();
 	      var appVersion = asm.GetName().Version.ToString(); 
 	      
-		  WriteLine($"==== DNX Watcher, v{appVersion} ===");
+		  WriteLine($"=========== DNX Watcher, v{appVersion} ==========");
 		  
 		  log($"watch folder : {appEnv.ApplicationBasePath}");
 		  log("started watch");
@@ -49,11 +54,12 @@ namespace Iago.FolderMonitor
 			 Action<string> onChange = 
 			 	(fsElement) => {
 					 var dnx = configuration.Get("dnx");
+					 log($"change -> {fsElement}");
 					 var started = ApplicationTime.Now;
 					 
 					 if(!string.IsNullOrEmpty(dnx))
 					 {
-						 WriteLine($"ready to {dnx}");
+						 log($"ready to {dnx}");
 						 
 						 var info = new ProcessStartInfo(
 							 filename:"dnx",
@@ -66,11 +72,36 @@ namespace Iago.FolderMonitor
 								 process.EnableRaisingEvents = true;
 								 process.WaitForExit();
 				            	 var stoped = (ApplicationTime.Now - started).TotalMilliseconds;
-					             Console.WriteLine($"Done in {stoped}ms");
+					             log($"Done in {stoped}ms");
 				            }
 						 }
+					
+					 } else {
+						 var cmd = configuration.Get("cmd:file");
+						 var cmdArgs = configuration.Get("cmd:args");
+						 if(!string.IsNullOrEmpty(cmd))
+						 {
+							 log($"starting command [{cmd}]");
+							 
+							 var info = new ProcessStartInfo(
+								 filename:cmd,
+								 arguments:cmdArgs
+							 );
+							 lock (Console.Out)
+							 {
+								 using(Process process = Process.Start(info))
+								 {
+									 process.EnableRaisingEvents = true;
+									 process.WaitForExit();
+					            	 var stoped = (ApplicationTime.Now - started).TotalMilliseconds;
+						             log($"Done in {stoped}ms");
+					            }
+							 }
+						 }
 					 }
+					 
 				 };
+				 
 			var watcher = 
 				new Watcher(
 					dir: Environment.CurrentDirectory,
@@ -89,7 +120,7 @@ namespace Iago.FolderMonitor
 			}
 			
 			watcher.Watch();
-			onChange("start");
+			onChange("Start");
 		    
 			Func<ConsoleKeyInfo,bool> checkKey = 
 			(key)=>{
@@ -98,7 +129,7 @@ namespace Iago.FolderMonitor
 			
             ConsoleKeyInfo cki;
 		    Console.TreatControlCAsInput = true;
-		
+			WriteLine("Press [ESQ] to stop watching");
 		    do {
 		         cki = Console.ReadKey(false);
 		   } while (checkKey(cki));

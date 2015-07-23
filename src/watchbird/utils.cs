@@ -8,8 +8,31 @@ namespace Utilities
 		public static Func<DateTime> NowDefinition {private get;set;} 
 			= ()=>DateTime.Now;
 		public static DateTime Now { get { return NowDefinition();}}
+		
+		static DateTime? start = null;
+		public static DateTime StartTime 
+		{
+			get{return start.HasValue ? start.Value: Start() ;}
+		}
+		public static DateTime Start()
+		{
+			if(start == null)
+			{
+				start = Now;
+			}
+			return start.Value;
+		}
+		
+		public static Func<string,string> GetStampDefinition = 
+			(pattern) => 
+				new DateTime((ApplicationTime.Now-StartTime).Ticks)
+				.ToString(pattern ?? "ss:ffffff");
+		
+		public static string GetStamp(string pattern = null)
+		{
+			return GetStampDefinition(pattern);
+		}
 	}
-	
 	
 	public class MatchNotFoundException : Exception 
 	{ 

@@ -1,4 +1,8 @@
 {
+	"cmd":{
+		"file":"echo",
+		"args":"hello world"
+		},
 	"continuousPolling":false,
 	"pollFrequency":150,
 	"detectEvents":{

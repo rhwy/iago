@@ -1,6 +1,14 @@
 {
+	"version": "1.0.0-beta6",
+	"name":"watchbird",
+    "description":"a simple watcher for dnx that works everywhere",
+    "projectUrl":"https://github.com/rhwy/watchbird",
+    "tags":["watch", "file", "continuous", "dnx"],
+	"authors": [
+		"rui carvalho"
+	],
+	
 	"dependencies": {
-		"kmon":"0.4.0",
 		"FSWatcher": "0.1.0",
 		"Microsoft.Framework.Runtime":"1.0.0-beta5",
 		"Microsoft.Framework.Configuration":"1.0.0-beta6",
@@ -8,7 +16,6 @@
 		"Microsoft.Framework.Configuration.CommandLine": "1.0.0-beta6"
 	},
 	"commands": {
-		"run":"iago.watcher",
-		"mon":"kmon --server run --ext cs"
+		"run":"watchbird",
 	}
 }
