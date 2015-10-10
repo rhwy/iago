@@ -53,16 +53,24 @@ As promised, it will be simple and quick.
 
 * run a first test just to check that everything is in place:
   * `k test`,
-  * you should get in return something like that:
 
+you should get in return something like that:
 
-    == --------------------------------------------------
-    ==     IAGO - K Spec Runner
-    == -----------------------------v0.1.1-beta3-1------
-
-    [INFO] scanning assembly [kata-rosalind-dna]
-    [INFO] no specs found
-
+     --------------------------------------------------------
+          _________
+         /         \ ______  _______  _______   v0.2.0.0
+         \_    ____//      |/  ___  \/   __  \
+           |   |   /   /|  |  |   \__|  /  \  \
+           |   |  /   /_|  |  |   __|  |    \  \
+         __|   |_/_   __   |  |___|  |  \    |  |
+        /         /  /  |  |         |\  \__/  /
+        \________/\_/  /____\____/|  | \______/
+                                  |__|
+         A cool test and spec runner for DNX
+     
+     --------------------------------------------------------
+     [00:000] ● scanning assembly [HelloWorldLibrary]
+     [00:002] ● no specification found
 
 * then create your first HelloWorldSpecs (`helloWorldSpecs.cs` but it could be whatever) file and start coding!
 
@@ -70,16 +78,16 @@ As promised, it will be simple and quick.
 
 Inside `helloWorldSpecs.cs`, first create your namespace and usings:
 
-    namespace HelloWorld.Specs
-    {
-      using Iago;
-      using static Iago.Specs;
-      using NFluent;
-
-      public class HelloWorldSpecs
-      {  
-      }
-    }
+         namespace HelloWorld.Specs
+         {
+           using Iago;
+           using static Iago.Specs;
+           using NFluent;
+     
+                public class HelloWorldSpecs
+                {  
+                }
+         }
 
 `Iago` and `Nfluent` are your testing tools.
 
@@ -91,39 +99,49 @@ Note that here you don't need attributes or inheritance because the default load
 
 Run `k test`, you should have that now:
 
-    == --------------------------------------------------
-    ==     IAGO - K Spec Runner
-    == -----------------------------v0.1.1-beta3-1------
-
-    [INFO] scanning assembly [kata-rosalind-dna]
-    [INFO] specs found
-    [INFO] running HelloWorldSpecs -------------------------------------------
-    [INFO] end running HelloWorldSpecs ---------------------------------------
+    --------------------------------------------------------
+               _________
+              /         \ ______  _______  _______   v0.2.0.0
+              \_    ____//      |/  ___  \/   __  \
+                |   |   /   /|  |  |   \__|  /  \  \
+                |   |  /   /_|  |  |   __|  |    \  \
+              __|   |_/_   __   |  |___|  |  \    |  |
+             /         /  /  |  |         |\  \__/  /
+             \________/\_/  /____\____/|  | \______/
+                                       |__|
+              A cool test and spec runner for DNX
+          
+          --------------------------------------------------------
+          [00:000] ● scanning assembly [coffeeMachine]
+          [00:002] ● found 1 Specification
+          [00:002] ✔ running HelloWord
+          [00:014] ✔ end running HelloWord
+          [00:014] ✔
 
 There is still no specs ran but you should see that your spec class was found.
 
 
 Add a first feature:
 
-    namespace HelloWorld.Specs
-    {
-      using Iago;
-      using static Iago.Specs;
-      using NFluent;
-
-      public class HelloWorldSpecs
-      {  
-        Specify that = () =>
-            "Hello world is a very simple demo class";
-
-        public HelloWorldSpecs()
-        {
-          When("hello machine is created", ()=>{
-            var machine = new HelloMachine();
-
-            Then("default message should be [hello world]", ()=> {
-              Check.That(machine.Message).IsEqualTo("hello world");
-            });
+         namespace HelloWorld.Specs
+         {
+           using Iago;
+           using static Iago.Specs;
+           using NFluent;
+     
+          public class HelloWorldSpecs
+          {  
+               Specify that = () =>
+                 "Hello world is a very simple demo class";
+               
+               public HelloWorldSpecs()
+               {
+                    When("hello machine is created", ()=>{
+                      var machine = new HelloMachine();
+                    
+                    Then("default message should be [hello world]", ()=> {
+                         Check.That(machine.Message).IsEqualTo("hello world");
+               });
           });
         }
       }
@@ -139,22 +157,33 @@ Run your tests, you'll see a compilation error. that's ok, write the minimal cod
 
 Then after a new run, you should see them fail like that:
 
-    == --------------------------------------------------
-    ==     IAGO - K Spec Runner
-    == -----------------------------v0.1.0-beta4-3------
-
-    [INFO] scanning assembly [kata-rosalind-dna]
-    [INFO] found specs
-    [INFO] running HelloWorldSpecs -------------------------------------------
-    [INFO] 	=> Hello world is a very simple demo class
-    [PASS]  [when] hello machine is created
-    [FAIL]    [then] default message should be [hello world]
-    [----]     The checked string is different from expected one.
-    [----]     The checked string:
-    [----]     	[null]
-    [----]     The expected string:
-    [----]     	["hello world"]
-    [INFO] end running HelloWorldSpecs ---------------------------------------
+    --------------------------------------------------------
+               _________
+              /         \ ______  _______  _______   v0.2.0.0
+              \_    ____//      |/  ___  \/   __  \
+                |   |   /   /|  |  |   \__|  /  \  \
+                |   |  /   /_|  |  |   __|  |    \  \
+              __|   |_/_   __   |  |___|  |  \    |  |
+             /         /  /  |  |         |\  \__/  /
+             \________/\_/  /____\____/|  | \______/
+                                       |__|
+              A cool test and spec runner for DNX
+          
+          --------------------------------------------------------
+          [00:000] ● scanning assembly [coffeeMachine]
+          [00:002] ● found 1 Specification
+          [00:002] ✔ running HelloWorld
+          [00:002] ✔  => Hello world is a very simple demo class
+          [00:003] ✔
+          [00:003] ✔   [when] hello machine is created
+          [00:003] ✔    [then] default message should be [hello world]
+          [00:014] ✘  The checked value is different from the expected one.
+          [00:014] ✘  The checked value:
+          [00:014] ✘  	[]
+          [00:014] ✘  The expected value:
+          [00:014] ✘  	["hello world"]
+          [00:014] ✔ end running HelloWorld
+          [00:014] ✔
 
 **note:**_on the doc all is black & white but in your shell [INFO] is in blue,[PASS] is green and [FAIL] in red._
 
@@ -167,18 +196,28 @@ Now, make your tests pass by adding the expected default value:
 
 Then all should be green now:
 
-    == --------------------------------------------------
-    ==     IAGO - K Spec Runner
-    == -----------------------------v0.1.0-beta4-3------
-
-    [INFO] scanning assembly [kata-rosalind-dna]
-    [INFO] found specs
-    [INFO] running HelloWorldSpecs -------------------------------------------
-    [INFO] 	=> Hello world is a very simple demo class
-    [PASS]  [when] hello machine is created
-    [PASS]    [then] default message should be [hello world]
-    [INFO] end running HelloWorldSpecs ---------------------------------------
-
+    --------------------------------------------------------
+               _________
+              /         \ ______  _______  _______   v0.2.0.0
+              \_    ____//      |/  ___  \/   __  \
+                |   |   /   /|  |  |   \__|  /  \  \
+                |   |  /   /_|  |  |   __|  |    \  \
+              __|   |_/_   __   |  |___|  |  \    |  |
+             /         /  /  |  |         |\  \__/  /
+             \________/\_/  /____\____/|  | \______/
+                                       |__|
+              A cool test and spec runner for DNX
+          
+          --------------------------------------------------------
+          [00:000] ● scanning assembly [coffeeMachine]
+          [00:002] ● found 1 Specification
+          [00:002] ✔ running HelloWorld
+          [00:002] ✔  => Hello world is a very simple demo class
+          [00:003] ✔
+          [00:003] ✔   [when] hello machine is created
+          [00:003] ✔    [then] default message should be [hello world]
+          [00:014] ✔ end running HelloWorld
+          [00:014] ✔
 
 _You've just finished your first Iago Spec, congratulations!_
 
