@@ -1,16 +1,7 @@
 {
-    "version":"0.1.0",
+    "version":"0.5.0-rc1-1",
     "name":"iago.consoleWriter",
-    "dependencies":{
-    },
-    "commands":{
-            
-    },
     "frameworks": {
-        "dnx451": {
-             "dependencies":{
-                    
-                }
-        }
+        "dnx451": {}
     }
 }

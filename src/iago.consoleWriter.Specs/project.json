@@ -1,16 +1,16 @@
 {
-    "version":"0.4.0-beta6",
+    "version":"0.5.0-rc1-1",
     "name":"iago.consoleWriter.specs",
     "dependencies":{
         "NFluent":"1.3.1.0",
-        "kmon": "0.4.0-*",
-        "iago.lib":{"version": "0.4-*", "type": "build"},
-        "iago.consoleWriter":{"version": "0.1", "type": "build"},
-        "iago.watcher":{"version": "1.0.0-*", "type": "build"},
-        "iago.runner":{"version": "0.1", "type": "build"}
+        "iago.lib":{"version": "0.5.0-*", "type": "build"},
+        "iago.consoleWriter":{"version": "0.5.0-*", "type": "build"},
+        "iago.runner":{"version": "0.5.0-*", "type": "build"}
     },
     "commands":{
-            "test": "iago.runner",
-            "watch": "iago.watcher --dnx=iago.runner"
+            "test": "iago.runner"
+    },
+    "frameworks": {
+        "dnx451":{}
     }
 }

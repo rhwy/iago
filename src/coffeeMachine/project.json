@@ -2,13 +2,11 @@
     "name":"Iago.Samples.CoffeeMachine",
     "version":"0.0.1",
     "dependencies":{
-            "kmon": "0.3.0",
-            "NFluent":"1.3.1.0",
-            "iago.runner":"0.1.0-beta3-5"
+            "NFluent":"1.0.0.0",
+            "iago.runner":{"version": "0.1.0-beta8-*", "type": "build"}
     },
     "commands":{
-            "test": "iago.runner",
-            "ct" : "kmon --ext cs --server test"
+            "test": "iago.runner"
     },
     "frameworks": {
         "dnx451": {},

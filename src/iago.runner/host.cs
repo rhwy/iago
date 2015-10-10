@@ -1,7 +1,7 @@
 namespace Iago.Runner {
   using System;
   using System.IO;
-  using Microsoft.Framework.Runtime;
+  using Microsoft.Dnx.Runtime;
   using Microsoft.Framework.Configuration;
   using Iago.Abstractions;
   public enum Option { None,Some}
@@ -19,8 +19,10 @@ namespace Iago.Runner {
 
     public void Main(params string[] args)
     {
-        var configurationBuilder = new ConfigurationBuilder(environment.ApplicationBasePath)
+        var configurationBuilder = new ConfigurationBuilder()
+          .SetBasePath(environment.ApplicationBasePath)
           .AddCommandLine(args);
+          
         configuration = configurationBuilder.Build();
         
       var version = $"v{hostConfig.AppVersion}";
@@ -41,7 +43,7 @@ namespace Iago.Runner {
         writeColor("[FAIL] " + cex.Message + Environment.NewLine,"red");
       }
 
-      var save = configuration.Get("out:file");
+      var save = configuration["out:file"];
       if(!string.IsNullOrEmpty(save))
       {
           if(!save.StartsWith("/"))
@@ -57,11 +59,20 @@ namespace Iago.Runner {
     {
  
       Iago.Specs.SetLogger(()=> logger);
-
+      
+      /*
+      IApplicationEnvironment properties:
+        ApplicationName
+        ApplicationBasePath
+        ApplicationVersion
+        Configuration
+        RuntimeFramework
+      */
+      
       environment = appEnv;
       var asm = System.Reflection.Assembly.GetExecutingAssembly();
       var appVersion = asm.GetName().Version.ToString();
-       
+      
       hostConfig = setupHostedConfiguration(appEnv,appVersion);
       app = new ApplicationHost(hostConfig,logger);
       
@@ -88,7 +99,7 @@ namespace Iago.Runner {
             path : appEnv.ApplicationBasePath,
             name : appEnv.ApplicationName,
             config : appEnv.Configuration,
-            hostVersion : appEnv.Version,
+            hostVersion : appEnv.ApplicationVersion,
             appVersion : appVersion
         );
        }

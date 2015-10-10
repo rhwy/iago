@@ -1,34 +1,31 @@
 {
     "name":"iago.runner",
-    "version":"0.4.0-beta6",
-    "description":"Iago runner is a tool to run bdd like tests in kre",
+    "version":"0.5.0-rc1-1",
+    "description":"Iago runner is a tool to run tdd/bdd like tests in DNX",
     "projectUrl":"https://github.com/rhwy/iago",
     "tags":["tdd", "bdd", "test", "dnx"],
     "dependencies":{
         "iago.lib":{"version": "0.4-*", "type": "build"},
-        "iago.watcher":{"version": "1.0.0-*", "type": "build"},
-        "iago.consoleWriter":{"version": "0.1", "type": "build"},
-        "NFluent":"1.3.1.0",
-        "Microsoft.Framework.Runtime.Abstractions": "1.0.0-beta6-*",
-        "Microsoft.Framework.Configuration":"1.0.0-beta5-11396",
-        "Microsoft.Framework.Configuration.CommandLine":"1.0.0-beta6-*"
+        "iago.consoleWriter":{"version": "0.1.0-*", "type": "build"},
+        "Microsoft.Dnx.Runtime.Abstractions": "1.0.0-*",
+        "Watchbird": "1.0.0-rc1-2",
+        "Microsoft.Framework.Configuration":"1.0.0-*",
+        "Microsoft.Framework.Configuration.CommandLine":"1.0.0-beta8-*"
     },
     
     "commands":{
         "test":"run",
-        "mon":"iago.watcher --dnx=test"   
+        "mon":"watchbird --dnx=test"   
+    },
+    "scripts": {
+        "prebuild": "echo before building",
+        "postbuild": "echo after building",
+        "prepack": "echo before packing",
+        "postpack": "echo after packing",
+        "prerestore": "echo before restoring packages",
+        "postrestore": "echo after restoring packages"
     },
     "frameworks": {
-        "dnx451": {
-            "frameworkAssemblies": {
-                "System.Collections": "",
-                "System.ObjectModel": "",
-                "System.Reflection": "",
-                "System.Runtime": "",
-                "System.Text.RegularExpressions": "",
-                "System.Xml": "",
-                "System.Xml.Linq": ""
-            }
-        }
+        "dnx451": {}
     }
 }
