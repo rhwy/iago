@@ -1,4 +1,6 @@
 # iago
+
+[![Join the chat at https://gitter.im/rhwy/iago](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rhwy/iago?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 IAGO is a Simple Bdd style tests library and runner for aspnet K runtime.
 
 #About
