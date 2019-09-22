@@ -7,5 +7,10 @@
     4. Recreate coffee machine sample project iso in order to ensure same functionality
     5. keep original syntax but rebuild lib design from scratch
 2. publish it quickly to nuget in order to start using it as quickly as possible
-3. try to find better syntax 
+3. improve simple things
+    1. dog food the project by removing xunit tests to Iago tests
+    2. try to find better syntax 
+    3. take old dnx todo to see historical points of improvement
+    4. create a dotnet template for Iago tests
 4. ask for help to make it work in a natural and compatible way in dotnet test pipeline
+

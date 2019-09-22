@@ -1,6 +1,9 @@
 # iago
 IAGO is a Simple Bdd style tests library and runner for aspnet K runtime.
 
+**NOTE: the actual documentation and available version is an old version from the pre-history of dotnet core. It is actually under rework to make it available under dotnet core 3.**
+
+
 #About
 Why Iago? There is lots of really great unit testing frameworks and BDD frameworks for the .Net platform, but that doesn't mean that there is no room for difference or improvements.
 
