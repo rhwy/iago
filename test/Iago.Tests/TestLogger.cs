@@ -1,40 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Iago.Common;
-using Iago.Language;
-using NFluent;
 
 namespace Iago.Tests
 {
-    using System;
-    using Xunit;
-    using static Iago.Language.Specs;
-    
-    public partial class GivenLanguageKeywords
-    {
-        public class WhenUsing_DescribeMethod
-        {
-            private TestLogger testLogger;
-
-            public WhenUsing_DescribeMethod()
-            {
-                this.testLogger = new TestLogger();
-                Specs.SetLogger(()=>testLogger);
-            }
-            [Fact]
-            public void it_should_execute_action()
-            {
-                var counter = 0;
-                It(" should set counter", () =>
-                {
-                    counter = 42;
-                });
-                Check.That(counter).IsEqualTo(42);
-                Check.That(testLogger.LogLines.Pop())
-                    .IsEqualTo("[Information]  [it]  should set counter");
-            }
-        }
-    }
-
     public class TestLogger : ILogger
     {
         public Stack<string> LogLines = new Stack<string>();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Iago.Runner
 {
@@ -6,7 +7,7 @@ namespace Iago.Runner
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

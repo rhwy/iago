@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Iago\Iago.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Runtime" />
+  </ItemGroup>
+
 </Project>

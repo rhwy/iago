@@ -15,18 +15,18 @@ namespace Iago.Language
             logger = setLogger();
         }
 
-        public static void When(string definition, DefineAction act) {
-            logger.LogInformation(" [when] "+definition);
+        public static void When(string name, DefineAction act) {
+            logger.LogInformation(" [when] " + name);
             act();
         }
 
-        public static void Describe(string definition, DefineAction act) {
-            logger.LogInformation("[describe] "+definition);
+        public static void Describe(string name, DefineAction act) {
+            logger.LogInformation("[describe] "+ name);
             act();
         }
 
-        public static void It(string definition, DefineAction act) {
-            logger.LogInformation(" [it] "+definition);
+        public static void It(string name, DefineAction act) {
+            logger.LogInformation(" [it] "+name);
             act();
         }
 
