@@ -185,3 +185,4 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+/src/Iago.Language/Iago.Language.fsproj
