@@ -5,4 +5,13 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="enlil" Version="0.4.0" />
+    <PackageReference Include="Nabu" Version="0.2.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Iago\Iago.csproj" />
+  </ItemGroup>
+
 </Project>
