@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Iago.Runner.Setup;
 using NFluent;
 using Xunit;
@@ -17,6 +19,27 @@ namespace Iago.Tests.Runner
                     .BuildConfiguration();
 
                 Check.That(appConfiguration.WorkingDirectory).IsEqualTo("/path/test");
+            }
+            
+            [Fact]
+            public void setup_provides_defaults_helpers()
+            {
+                AppConfiguration appConfiguration = SetupTheConfiguration
+                    .WithDefaults()
+                    .BuildConfiguration();
+
+                Check.That(appConfiguration.WorkingDirectory).IsEqualTo(Directory.GetCurrentDirectory());
+            }
+            
+            [Fact]
+            public void setup_provides_info_about_watch()
+            {
+                var commandLine = "dotnet iago watch run";
+                AppConfiguration appConfiguration = SetupTheConfiguration
+                    .WithDefaults(commandLine)
+                    .BuildConfiguration();
+
+                Check.That(appConfiguration.IsWatching).IsTrue();
             }
         }
         
