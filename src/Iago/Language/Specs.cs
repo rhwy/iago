@@ -8,6 +8,8 @@ namespace Iago.Language
     public static class Specs {
         private static ILogger logger;
         private static Func<ILogger> setLogger = ()=> new DefaultAppLogger();
+        public static string Indentation { get; set; } = "    ";
+
         private static ILogger GetLogger()
         {
             if (logger == default) logger = setLogger();
@@ -20,17 +22,17 @@ namespace Iago.Language
         }
 
         public static void When(string name, DefineAction act) {
-            GetLogger().LogInformation($"   [when] {name}");
+            GetLogger().LogInformation($"{Indentation}[when] {name}");
             act();
         }
 
         public static void Describe(string name, DefineAction act) {
-            GetLogger().LogInformation("[describe] "+ name);
+            GetLogger().LogInformation($"[describe] {name}");
             act();
         }
 
         public static void It(string name, DefineAction act) {
-            GetLogger().LogInformation(" [it] "+name);
+            GetLogger().LogInformation($"{Indentation}[it] {name}");
             act();
         }
 
@@ -47,29 +49,29 @@ namespace Iago.Language
                 return betterMessage;
             };
 
-            GetLogger().LogVerbose(" sample");
+            GetLogger().LogVerbose($"{Indentation}sample");
             if(context != null)
             {
-                logger.LogVerbose(" - context:" + Environment.NewLine + writeLines(context));
+                logger.LogVerbose($"{Indentation} - context:" + Environment.NewLine + writeLines(context));
             }
-            GetLogger().LogVerbose(" - input  : " + Environment.NewLine + writeLines(input));
-            GetLogger().LogVerbose(" - output : " + Environment.NewLine + writeLines(output));
+            GetLogger().LogVerbose($"{Indentation} - input  : " + Environment.NewLine + writeLines(input));
+            GetLogger().LogVerbose($"{Indentation} - output : " + Environment.NewLine + writeLines(output));
 
         }
         public static void Then(string definition, CheckAction assert) {
-            GetLogger().LogInformation("    [then] "+definition);
+            GetLogger().LogInformation($"{Indentation}[then] {definition}");
             assert();
         }
         public static void Then<T>(string definition,
             CheckActionWithSamples<T> assert, T values) {
-            GetLogger().LogInformation("  [then] "+definition);
+            GetLogger().LogInformation($"{Indentation}[then] {definition}");
             assert(values);
         }
 
         public static void Then<T>(string definition,
             CheckActionWithSamples<T> assert, IEnumerable<T> values) {
 
-            GetLogger().LogInformation("  [then] "+definition);
+            GetLogger().LogInformation($"{Indentation}[then] {definition}");
             int testCounter=0;
             foreach(T value in values)
             {
@@ -93,7 +95,7 @@ namespace Iago.Language
             try
             {
                 assert();
-                GetLogger().LogInformation("[.And] "+definition);
+                GetLogger().LogInformation($"{Indentation}[And] {definition}");
             } catch(Exception ex)
             {
                 var lines = ex.Message.Split(Environment.NewLine.ToCharArray());
@@ -101,10 +103,7 @@ namespace Iago.Language
                     "    " + line);
                 var betterMessage = string.Join(Environment.NewLine,betterLines);
                 GetLogger().LogError(
-                    "[.And] "
-                    +definition
-                    + Environment.NewLine
-                    + betterMessage);
+                    $"{Indentation}[And] {definition}{Environment.NewLine}{betterMessage}");
             }
 
         }
