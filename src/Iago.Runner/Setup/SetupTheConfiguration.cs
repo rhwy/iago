@@ -3,11 +3,14 @@ using System.IO;
 
 namespace Iago.Runner.Setup
 {
-    public class SetupTheConfiguration
+    public class SetupTheConfiguration : ISetupTheConfiguration
     {
-        private Func<string> _workingDirectory = null;
+        private Func<string> _workingDirectory = Directory.GetCurrentDirectory;
         private Func<SetupTheConfiguration, bool> _isWatching = 
             (s) => s.CommandLineArguments?.ToLower().Contains("watch") ?? false;
+
+        private Func<SetupTheConfiguration, bool> _isVerbose =
+            (s) => s.CommandLineArguments?.ToLower().Contains("verbose") ?? false;
         public string CommandLineArguments { get; }
         public static SetupTheConfiguration New => new SetupTheConfiguration();
 
@@ -36,25 +39,13 @@ namespace Iago.Runner.Setup
         {
             return new AppConfiguration(
                 workingDirectory: _workingDirectory?.Invoke(),
-                isWatching: _isWatching?.Invoke(this) ?? false);
+                isWatching: _isWatching?.Invoke(this) ?? false,
+                printAllInfo:_isVerbose?.Invoke(this) ?? false);
         }
 
         public static SetupTheConfiguration WithDefaults(string args = null)
         {
-            return new SetupTheConfiguration(args ?? string.Empty)
-                .DefineGetWorkingDirectory(Directory.GetCurrentDirectory);
-        }
-    }
-
-    public class AppConfiguration
-    {
-        public string WorkingDirectory { get; }
-        public bool IsWatching { get;}
-
-        public AppConfiguration(string workingDirectory, bool isWatching = false)
-        {
-            WorkingDirectory = workingDirectory;
-            IsWatching = isWatching;
+            return new SetupTheConfiguration(args ?? string.Empty);
         }
     }
 }

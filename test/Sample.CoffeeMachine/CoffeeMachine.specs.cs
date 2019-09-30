@@ -7,6 +7,14 @@ using static Iago.Language.Specs;
 
 namespace Sample.CoffeeMachine
 {
+    public class HelloWorldSpecs   
+    {
+        
+    }
+    public class Say2Specs   
+    {
+        
+    }
     public class CoffeeMachineSpecs
     {
         Specify that = () =>

@@ -31,15 +31,28 @@ namespace Iago.Tests.Runner
                 Check.That(appConfiguration.WorkingDirectory).IsEqualTo(Directory.GetCurrentDirectory());
             }
             
-            [Fact]
-            public void setup_provides_info_about_watch()
+            [Theory]
+            [InlineData("dotnet iago", false)]
+            [InlineData("dotnet iago watch", true)]
+            public void setup_provides_info_about_watch(string args, bool expected)
             {
-                var commandLine = "dotnet iago watch run";
                 AppConfiguration appConfiguration = SetupTheConfiguration
-                    .WithDefaults(commandLine)
+                    .WithDefaults(args)
                     .BuildConfiguration();
 
-                Check.That(appConfiguration.IsWatching).IsTrue();
+                Check.That(appConfiguration.IsWatching).IsEqualTo(expected);
+            }
+            
+            [Theory]
+            [InlineData("dotnet iago", false)]
+            [InlineData("dotnet iago watch verbose", true)]
+            public void setup_provides_verbose_option_to_print_all(string args, bool expected)
+            {
+                AppConfiguration appConfiguration = SetupTheConfiguration
+                    .WithDefaults(args)
+                    .BuildConfiguration();
+
+                Check.That(appConfiguration.PrintAllInfo).IsEqualTo(expected);
             }
         }
         
