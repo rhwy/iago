@@ -8,7 +8,11 @@ namespace Iago.Language
     public static class Specs {
         private static ILogger logger;
         private static Func<ILogger> setLogger = ()=> new DefaultAppLogger();
-        
+        private static ILogger GetLogger()
+        {
+            if (logger == default) logger = setLogger();
+            return logger;
+        }
         public static void SetLogger(Func<ILogger> logDefinition)
         {
             setLogger = logDefinition;
@@ -16,17 +20,17 @@ namespace Iago.Language
         }
 
         public static void When(string name, DefineAction act) {
-            logger.LogInformation(" [when] " + name);
+            GetLogger().LogInformation($"   [when] {name}");
             act();
         }
 
         public static void Describe(string name, DefineAction act) {
-            logger.LogInformation("[describe] "+ name);
+            GetLogger().LogInformation("[describe] "+ name);
             act();
         }
 
         public static void It(string name, DefineAction act) {
-            logger.LogInformation(" [it] "+name);
+            GetLogger().LogInformation(" [it] "+name);
             act();
         }
 
@@ -43,29 +47,29 @@ namespace Iago.Language
                 return betterMessage;
             };
 
-            logger.LogVerbose(" sample");
+            GetLogger().LogVerbose(" sample");
             if(context != null)
             {
                 logger.LogVerbose(" - context:" + Environment.NewLine + writeLines(context));
             }
-            logger.LogVerbose(" - input  : " + Environment.NewLine + writeLines(input));
-            logger.LogVerbose(" - output : " + Environment.NewLine + writeLines(output));
+            GetLogger().LogVerbose(" - input  : " + Environment.NewLine + writeLines(input));
+            GetLogger().LogVerbose(" - output : " + Environment.NewLine + writeLines(output));
 
         }
         public static void Then(string definition, CheckAction assert) {
-            logger.LogInformation("  [then] "+definition);
+            GetLogger().LogInformation("    [then] "+definition);
             assert();
         }
         public static void Then<T>(string definition,
             CheckActionWithSamples<T> assert, T values) {
-            logger.LogInformation("  [then] "+definition);
+            GetLogger().LogInformation("  [then] "+definition);
             assert(values);
         }
 
         public static void Then<T>(string definition,
             CheckActionWithSamples<T> assert, IEnumerable<T> values) {
 
-            logger.LogInformation("  [then] "+definition);
+            GetLogger().LogInformation("  [then] "+definition);
             int testCounter=0;
             foreach(T value in values)
             {
@@ -89,14 +93,14 @@ namespace Iago.Language
             try
             {
                 assert();
-                logger.LogInformation("[.And] "+definition);
+                GetLogger().LogInformation("[.And] "+definition);
             } catch(Exception ex)
             {
                 var lines = ex.Message.Split(Environment.NewLine.ToCharArray());
                 var betterLines = lines.Skip(1).Select(line=>
                     "    " + line);
                 var betterMessage = string.Join(Environment.NewLine,betterLines);
-                logger.LogError(
+                GetLogger().LogError(
                     "[.And] "
                     +definition
                     + Environment.NewLine
